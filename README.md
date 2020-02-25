@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="460" height="300" src="https://raw.githubusercontent.com/ejackson007/aycheCalendar/master/extras/Logo.jpeg?token=AKIEJDPCI7XD5BFTQJM7QZK6KSBOY)">
+  <img width="460" height="300" src="https://raw.githubusercontent.com/ejackson007/aycheCalendar/master/extras/Logo.jpeg?token=AKIEJDPCI7XD5BFTQJM7QZK6KSBOY/460/300)">
 </p>
 
 # aycheCalendar
