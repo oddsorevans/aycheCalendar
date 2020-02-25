@@ -24,11 +24,14 @@ class LoginWindow(QMainWindow):
         self.username = QLineEdit(self)
         self.username.move(20, 20)
         self.username.resize(280,40)
+        self.username.setPlaceholderText("Username")
 
         # Create textbox
         self.password = QLineEdit(self)
         self.password.move(20, 80)
         self.password.resize(280,40)
+        self.password.setPlaceholderText("Password")
+        self.password.setEchoMode(QLineEdit.Password)
         
         # Create a button in the window
         self.LoginButton = QPushButton('Login', self)
