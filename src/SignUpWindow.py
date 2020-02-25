@@ -42,7 +42,7 @@ class SignUpWindow(QMainWindow):
         self.dob_label = QLabel(self)
         self.dob_label.move(20, 200)
         self.dob_label.resize(60,40)
-        self.dob_label.setText("Date of Birth")
+        self.dob_label.setText("DOB")
 
         # dob_year
         self.dob_year = QLineEdit(self)
@@ -99,19 +99,21 @@ class SignUpWindow(QMainWindow):
     @pyqtSlot()
     def submit_click(self):
         
-        usernameValue = self.username.text()
-        passwordValue = self.password.text()
+        # usernameValue = self.username.text()
+        # passwordValue = self.password.text()
 
-        if usernameValue == "Daycee":
-            if passwordValue == "Password":
-                QMessageBox.question(self, 'Message - pythonspot.com', "Login successful!", QMessageBox.Ok, QMessageBox.Ok)
-                self.username.setText("")
-                self.password.setText("")
-                self.close()
-            else:
-                QMessageBox.question(self, 'Message - pythonspot.com', "Invaid password. Try again.", QMessageBox.Ok, QMessageBox.Ok)
-                self.password.setText("")
-        else: 
-            QMessageBox.question(self, 'Message - pythonspot.com', "That user is not registered, please signup", QMessageBox.Ok, QMessageBox.Ok)
-            self.username.setText("")
-            self.password.setText("")
+        # if usernameValue == "Daycee":
+        #     if passwordValue == "Password":
+        #         QMessageBox.question(self, 'Message - pythonspot.com', "Login successful!", QMessageBox.Ok, QMessageBox.Ok)
+        #         self.username.setText("")
+        #         self.password.setText("")
+        #         self.close()
+        #     else:
+        #         QMessageBox.question(self, 'Message - pythonspot.com', "Invaid password. Try again.", QMessageBox.Ok, QMessageBox.Ok)
+        #         self.password.setText("")
+        # else: 
+        #     QMessageBox.question(self, 'Message - pythonspot.com', "That user is not registered, please signup", QMessageBox.Ok, QMessageBox.Ok)
+        #     self.username.setText("")
+        #     self.password.setText("")
+
+        QMessageBox.question(self, 'Message - pythonspot.com', "Congrats " + self.First_Name.text() + " you have signed up!", QMessageBox.Ok)
