@@ -13,7 +13,6 @@ class SignUpWindow(QMainWindow):
         self.width = 960
         self.height = 540
         self.initUI()
-        
     
     def initUI(self):
         self.setWindowTitle(self.title)
