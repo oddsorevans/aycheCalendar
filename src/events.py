@@ -19,4 +19,9 @@ class eventTable():
         super().__init__()
         self.eventsTable = {} #dictionary to hold all events for user
 
-    def addEvent(self, toAdd): # check for family presence, and then append event to eventTable list
+    def addEvent(self, toAdd):
+        if toAdd.family in self.eventsTable: # if family already exists, add event
+            eventsTable[toAdd.family].append(toAdd)
+        else: # if family does not exists, add it and call function again
+            eventTable[toAdd.family] = []
+            self.addEvent(toAdd)
