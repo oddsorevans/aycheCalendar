@@ -101,17 +101,21 @@ class SignUpWindow(QMainWindow):
         
     @pyqtSlot()
     def submit_click(self):
+        #set variables to make the add user cleaner
         fn = self.First_Name.text()
         ln = self.Last_Name.text()
         email = self.Email.text()
+        #set bd from string to datetime
         bd = datetime(int(self.dob_year.text()), int(self.dob_month.text()), int(self.dob_day.text()), 0, 0, 0)
         username = self.username.text()
         password = self.password.text()
 
+        #Have to check if it exists before adding to avoid duplicate accounts
         if checkEmailUser(username, email) is True:
             QMessageBox.question(self, 'Message - pythonspot.com', "Username or Email already exists", QMessageBox.Ok, QMessageBox.Ok)
             self.username.setText("")
             self.Email.setText("")
+        #add user
         else:
             addUser(fn, ln, email, bd, username, password)
 

@@ -57,7 +57,7 @@ class LoginWindow(QMainWindow):
     def login_click(self):
         usernameValue = self.username.text()
         passwordValue = self.password.text()
-
+        #check and see if user is in the database
         if checkLogin(usernameValue, passwordValue) is True:
             QMessageBox.question(self, 'Message - pythonspot.com', "Login successful!", QMessageBox.Ok, QMessageBox.Ok)
         else:
