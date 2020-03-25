@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAc
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, pyqtSlot
 from mongoConnect import addUser
+from mongoConnect import checkEmailUser
 
 class SignUpWindow(QMainWindow):
 
@@ -107,22 +108,11 @@ class SignUpWindow(QMainWindow):
         username = self.username.text()
         password = self.password.text()
 
-        addUser(fn, ln, email, bd, username, password)
+        if checkEmailUser(username, email) is True:
+            QMessageBox.question(self, 'Message - pythonspot.com', "Username or Email already exists", QMessageBox.Ok, QMessageBox.Ok)
+            self.username.setText("")
+            self.Email.setText("")
+        else:
+            addUser(fn, ln, email, bd, username, password)
 
-        QMessageBox.question(self, 'Message - pythonspot.com', 'Check Mongo to see if it correctly added user', QMessageBox.Ok, QMessageBox.Ok)
-
-        # if usernameValue == "Daycee":
-        #     if passwordValue == "Password":
-        #         QMessageBox.question(self, 'Message - pythonspot.com', "Login successful!", QMessageBox.Ok, QMessageBox.Ok)
-        #         self.username.setText("")
-        #         self.password.setText("")
-        #         self.close()
-        #     else:
-        #         QMessageBox.question(self, 'Message - pythonspot.com', "Invaid password. Try again.", QMessageBox.Ok, QMessageBox.Ok)
-        #         self.password.setText("")
-        # else: 
-        #     QMessageBox.question(self, 'Message - pythonspot.com', "That user is not registered, please signup", QMessageBox.Ok, QMessageBox.Ok)
-        #     self.username.setText("")
-        #     self.password.setText("")
-
-        #QMessageBox.question(self, 'Message - pythonspot.com', "Congrats " + self.First_Name.text() + " you have signed up!", QMessageBox.Ok)
+            QMessageBox.question(self, 'Message - pythonspot.com', 'Account Created!', QMessageBox.Ok, QMessageBox.Ok)

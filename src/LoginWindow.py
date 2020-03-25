@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAc
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, pyqtSlot
 from SignUpWindow import SignUpWindow
+from mongoConnect import checkLogin
 
 class LoginWindow(QMainWindow):
 
@@ -57,18 +58,13 @@ class LoginWindow(QMainWindow):
         usernameValue = self.username.text()
         passwordValue = self.password.text()
 
-        if usernameValue == "Daycee":
-            if passwordValue == "Password":
-                QMessageBox.question(self, 'Message - pythonspot.com', "Login successful!", QMessageBox.Ok, QMessageBox.Ok)
-                self.username.setText("")
-                self.password.setText("")
-            else:
-                QMessageBox.question(self, 'Message - pythonspot.com', "Invaid password. Try again.", QMessageBox.Ok, QMessageBox.Ok)
-                self.password.setText("")
-        else: 
-            QMessageBox.question(self, 'Message - pythonspot.com', "That user is not registered, please signup", QMessageBox.Ok, QMessageBox.Ok)
+        if checkLogin(usernameValue, passwordValue) is True:
+            QMessageBox.question(self, 'Message - pythonspot.com', "Login successful!", QMessageBox.Ok, QMessageBox.Ok)
+        else:
+            QMessageBox.question(self, 'Message - pythonspot.com', "Username or Password was Incorrect", QMessageBox.Ok, QMessageBox.Ok)
             self.username.setText("")
             self.password.setText("")
+
 
     def signup_click(self):
         self.w = SignUpWindow()
