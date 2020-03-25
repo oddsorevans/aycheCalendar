@@ -1,7 +1,9 @@
 import sys
+from datetime import datetime
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, pyqtSlot
+from mongoConnect import addUser
 
 class SignUpWindow(QMainWindow):
 
@@ -98,9 +100,16 @@ class SignUpWindow(QMainWindow):
         
     @pyqtSlot()
     def submit_click(self):
-        
-        # usernameValue = self.username.text()
-        # passwordValue = self.password.text()
+        fn = self.First_Name.text()
+        ln = self.Last_Name.text()
+        email = self.Email.text()
+        bd = datetime(int(self.dob_year.text()), int(self.dob_month.text()), int(self.dob_day.text()), 0, 0, 0)
+        username = self.username.text()
+        password = self.password.text()
+
+        addUser(fn, ln, email, bd, username, password)
+
+        QMessageBox.question(self, 'Message - pythonspot.com', 'Check Mongo to see if it correctly added user', QMessageBox.Ok, QMessageBox.Ok)
 
         # if usernameValue == "Daycee":
         #     if passwordValue == "Password":
@@ -116,4 +125,4 @@ class SignUpWindow(QMainWindow):
         #     self.username.setText("")
         #     self.password.setText("")
 
-        QMessageBox.question(self, 'Message - pythonspot.com', "Congrats " + self.First_Name.text() + " you have signed up!", QMessageBox.Ok)
+        #QMessageBox.question(self, 'Message - pythonspot.com', "Congrats " + self.First_Name.text() + " you have signed up!", QMessageBox.Ok)
