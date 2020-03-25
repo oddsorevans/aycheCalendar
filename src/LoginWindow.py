@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAc
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt, pyqtSlot
 from SignUpWindow import SignUpWindow
+from CalendarWindow import CalendarWindow
 from mongoConnect import checkLogin
 
 class LoginWindow(QMainWindow):
@@ -60,11 +61,14 @@ class LoginWindow(QMainWindow):
         #check and see if user is in the database
         if checkLogin(usernameValue, passwordValue) is True:
             QMessageBox.question(self, 'Message - pythonspot.com', "Login successful!", QMessageBox.Ok, QMessageBox.Ok)
+            self.w = CalendarWindow()
+            self.w.show()
+            self.hide()
         else:
             QMessageBox.question(self, 'Message - pythonspot.com', "Username or Password was Incorrect", QMessageBox.Ok, QMessageBox.Ok)
             self.username.setText("")
             self.password.setText("")
-
+   
 
     def signup_click(self):
         self.w = SignUpWindow()

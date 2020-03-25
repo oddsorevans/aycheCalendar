@@ -3,12 +3,6 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAc
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtCore import Qt, pyqtSlot
 
-#from CalendarWindow import CalendarWindow
-
-#def sumbit_click(self):
-#        self.w = CalendarWindow()
-#        self.w.show()
-
 class CalendarWindow(QMainWindow):
 
     def __init__(self):
