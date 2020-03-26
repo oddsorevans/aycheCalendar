@@ -113,6 +113,8 @@ class SignUpWindow(QMainWindow):
 
         if self.Confirm_Password != self.password:
             QMessageBox.question(self, '', "Password and confirm password do not match", QMessageBox.Ok, QMessageBox.Ok)
+            self.password.setText("")
+            self.Confirm_Password.setText("")
         #Have to check if it exists before adding to avoid duplicate accounts
         elif checkEmailUser(username, email) is True:
             QMessageBox.question(self, '', "Username or Email already exists", QMessageBox.Ok, QMessageBox.Ok)
