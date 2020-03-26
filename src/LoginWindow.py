@@ -61,7 +61,7 @@ class LoginWindow(QMainWindow):
         #check and see if user is in the database
         if checkLogin(usernameValue, passwordValue) is True:
             QMessageBox.question(self, '', "Login successful!", QMessageBox.Ok, QMessageBox.Ok)
-            self.w = CalendarWindow()
+            self.w = CalendarWindow(usernameValue)
             self.w.show()
             self.hide()
         else:

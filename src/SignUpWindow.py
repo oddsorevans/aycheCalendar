@@ -123,6 +123,6 @@ class SignUpWindow(QMainWindow):
             addUser(fn, ln, email, bd, username, password)
 
             QMessageBox.question(self, '', 'Account Created!', QMessageBox.Ok, QMessageBox.Ok)
-            self.w = CalendarWindow()
+            self.w = CalendarWindow(username)
             self.w.show()
             self.hide()
