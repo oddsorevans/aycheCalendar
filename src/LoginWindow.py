@@ -60,12 +60,12 @@ class LoginWindow(QMainWindow):
         passwordValue = self.password.text()
         #check and see if user is in the database
         if checkLogin(usernameValue, passwordValue) is True:
-            QMessageBox.question(self, 'Message - pythonspot.com', "Login successful!", QMessageBox.Ok, QMessageBox.Ok)
+            QMessageBox.question(self, '', "Login successful!", QMessageBox.Ok, QMessageBox.Ok)
             self.w = CalendarWindow()
             self.w.show()
             self.hide()
         else:
-            QMessageBox.question(self, 'Message - pythonspot.com', "Username or Password was Incorrect", QMessageBox.Ok, QMessageBox.Ok)
+            QMessageBox.question(self, '', "Username or Password was Incorrect", QMessageBox.Ok, QMessageBox.Ok)
             self.username.setText("")
             self.password.setText("")
    

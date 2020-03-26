@@ -111,16 +111,18 @@ class SignUpWindow(QMainWindow):
         username = self.username.text()
         password = self.password.text()
 
+        if self.Confirm_Password != self.password:
+            QMessageBox.question(self, '', "Password and confirm password do not match", QMessageBox.Ok, QMessageBox.Ok)
         #Have to check if it exists before adding to avoid duplicate accounts
-        if checkEmailUser(username, email) is True:
-            QMessageBox.question(self, 'Message - pythonspot.com', "Username or Email already exists", QMessageBox.Ok, QMessageBox.Ok)
+        elif checkEmailUser(username, email) is True:
+            QMessageBox.question(self, '', "Username or Email already exists", QMessageBox.Ok, QMessageBox.Ok)
             self.username.setText("")
             self.Email.setText("")
         #add user
         else:
             addUser(fn, ln, email, bd, username, password)
 
-            QMessageBox.question(self, 'Message - pythonspot.com', 'Account Created!', QMessageBox.Ok, QMessageBox.Ok)
+            QMessageBox.question(self, '', 'Account Created!', QMessageBox.Ok, QMessageBox.Ok)
             self.w = CalendarWindow()
             self.w.show()
             self.hide()

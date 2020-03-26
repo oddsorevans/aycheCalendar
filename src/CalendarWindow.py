@@ -15,7 +15,7 @@ class CalendarWindow(QMainWindow):
         self.initUI()
         
         self.textFont = QFont()
-        self.textFont.setPointSize(72)
+        self.textFont.setPointSize(60)
         
         # Create Label
         self.welcomeText = QLabel(self)
