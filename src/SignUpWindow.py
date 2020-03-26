@@ -3,6 +3,7 @@ from datetime import datetime
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt, pyqtSlot
+from CalendarWindow import CalendarWindow
 from mongoConnect import addUser
 from mongoConnect import checkEmailUser
 
@@ -120,3 +121,6 @@ class SignUpWindow(QMainWindow):
             addUser(fn, ln, email, bd, username, password)
 
             QMessageBox.question(self, 'Message - pythonspot.com', 'Account Created!', QMessageBox.Ok, QMessageBox.Ok)
+            self.w = CalendarWindow()
+            self.w.show()
+            self.hide()
