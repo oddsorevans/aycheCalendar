@@ -73,3 +73,4 @@ class LoginWindow(QMainWindow):
     def signup_click(self):
         self.w = SignUpWindow()
         self.w.show()
+        self.hide()
