@@ -111,7 +111,7 @@ class SignUpWindow(QMainWindow):
         username = self.username.text()
         password = self.password.text()
 
-        if self.Confirm_Password != self.password:
+        if self.Confirm_Password.text() != self.password.text():
             QMessageBox.question(self, '', "Password and confirm password do not match", QMessageBox.Ok, QMessageBox.Ok)
             self.password.setText("")
             self.Confirm_Password.setText("")
