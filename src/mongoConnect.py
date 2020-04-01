@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import connectionStrings #updated 4/1/2020
 import datetime
 import pprint
 
@@ -14,7 +15,7 @@ def addUser(fn, ln, email, bd, usern, passwd):
         'stPassword' : passwd
     }
     #connects to user list inside Data db of the Ayche cluster
-    client = MongoClient("mongodb://Ayche:3Y8yqtb23lSdbVmf@ayche-shard-00-00-7twqa.mongodb.net:27017,ayche-shard-00-01-7twqa.mongodb.net:27017,ayche-shard-00-02-7twqa.mongodb.net:27017/test?ssl=true&replicaSet=Ayche-shard-0&authSource=admin&retryWrites=true&w=majority")
+    client = MongoClient(connectionStrings.connectionKey)
     db = client.get_database('Data')
     records = db.users
     #inserts student
@@ -23,7 +24,7 @@ def addUser(fn, ln, email, bd, usern, passwd):
     client.close()
 
 def checkLogin(usern, passwd):
-    client = MongoClient("mongodb://Ayche:3Y8yqtb23lSdbVmf@ayche-shard-00-00-7twqa.mongodb.net:27017,ayche-shard-00-01-7twqa.mongodb.net:27017,ayche-shard-00-02-7twqa.mongodb.net:27017/test?ssl=true&replicaSet=Ayche-shard-0&authSource=admin&retryWrites=true&w=majority")
+    client = MongoClient(connectionStrings.connectionKey)
     db = client.get_database('Data')
     records = db.users
     #uses AND to check if the pair exists. Either returns dict or Nonetype
@@ -41,7 +42,7 @@ def checkLogin(usern, passwd):
         return True
 
 def checkEmailUser(usern, email):
-    client = MongoClient("mongodb://Ayche:3Y8yqtb23lSdbVmf@ayche-shard-00-00-7twqa.mongodb.net:27017,ayche-shard-00-01-7twqa.mongodb.net:27017,ayche-shard-00-02-7twqa.mongodb.net:27017/test?ssl=true&replicaSet=Ayche-shard-0&authSource=admin&retryWrites=true&w=majority")
+    client = MongoClient(connectionStrings.connectionKey)
     db = client.get_database('Data')
     records = db.users
     #uses OR to check if either already exist in a user. 
