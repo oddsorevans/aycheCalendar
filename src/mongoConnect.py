@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import connectionStrings #updated 4/1/2020
 import datetime
+import time
 import pprint
 
 #function adds a user into the database
@@ -24,6 +25,8 @@ def addUser(fn, ln, email, bd, usern, passwd):
     client.close()
 
 def checkLogin(usern, passwd):
+    # used to test performance
+    # start = time.time()
     client = MongoClient(connectionStrings.connectionKey)
     db = client.get_database('Data')
     records = db.users
@@ -36,6 +39,9 @@ def checkLogin(usern, passwd):
     })
     #close and return value
     client.close()
+    # used to test performance
+    # elapsed = time.time() - start
+    # print(elapsed)
     if isThere is None:
         return False
     else:
@@ -58,3 +64,6 @@ def checkEmailUser(usern, email):
         return False
     else:
         return True
+
+# for i in range(0,10):
+#     checkLogin("streams", "mayonnaise") 
