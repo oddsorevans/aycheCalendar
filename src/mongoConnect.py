@@ -3,9 +3,16 @@ import connectionStrings #updated 4/1/2020
 import datetime
 import time
 import pprint
+import bcrypt
 
 #function adds a user into the database
 def addUser(fn, ln, email, bd, usern, passwd):
+    #hash password
+    salt = bcrypt.gensalt()
+    #use encode() to turn string to byte for processing
+    hashed = bcrypt.hashpw(passwd.encode(), salt)
+    #turn from byte to string
+    hashed = hashed.decode()
     #creates dictionary to store
     newUser = {
         'stFirstName' : fn,
@@ -13,7 +20,7 @@ def addUser(fn, ln, email, bd, usern, passwd):
         'stEmail' : email,
         'birthday' : bd,
         'stUsername' : usern,
-        'stPassword' : passwd
+        'stPassword' : hashed
     }
     #connects to user list inside Data db of the Ayche cluster
     client = MongoClient(connectionStrings.connectionKey)
@@ -31,21 +38,24 @@ def checkLogin(usern, passwd):
     db = client.get_database('Data')
     records = db.users
     #uses AND to check if the pair exists. Either returns dict or Nonetype
-    isThere = records.find_one({
-        '$and' : [
-            {"stUsername" : usern},
-            {"stPassword" : passwd}
-        ]
-    })
+    isThere = records.find_one(
+        {"stUsername" : usern}
+    )
     #close and return value
     client.close()
     # used to test performance
     #elapsed = time.time() - start
     #print(elapsed)
+
+    #if nothing returned, false
     if isThere is None:
         return False
+    #username exists, check password
     else:
-        return True
+        if bcrypt.checkpw(passwd.encode(), isThere["stPassword"].encode()):
+            return True
+        else:
+            return False
 
 def checkEmailUser(usern, email):
     client = MongoClient(connectionStrings.connectionKey)
