@@ -1,7 +1,11 @@
 import sys
+from datetime import datetime
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt, pyqtSlot
+from CalendarWindow import CalendarWindow
+from mongoConnect import addUser
+from mongoConnect import checkEmailUser
 
 class SignUpWindow(QMainWindow):
 
@@ -98,22 +102,29 @@ class SignUpWindow(QMainWindow):
         
     @pyqtSlot()
     def submit_click(self):
-        
-        # usernameValue = self.username.text()
-        # passwordValue = self.password.text()
+        #set variables to make the add user cleaner
+        fn = self.First_Name.text()
+        ln = self.Last_Name.text()
+        email = self.Email.text()
+        #set bd from string to datetime
+        bd = datetime(int(self.dob_year.text()), int(self.dob_month.text()), int(self.dob_day.text()), 0, 0, 0)
+        username = self.username.text()
+        password = self.password.text()
 
-        # if usernameValue == "Daycee":
-        #     if passwordValue == "Password":
-        #         QMessageBox.question(self, 'Message - pythonspot.com', "Login successful!", QMessageBox.Ok, QMessageBox.Ok)
-        #         self.username.setText("")
-        #         self.password.setText("")
-        #         self.close()
-        #     else:
-        #         QMessageBox.question(self, 'Message - pythonspot.com', "Invaid password. Try again.", QMessageBox.Ok, QMessageBox.Ok)
-        #         self.password.setText("")
-        # else: 
-        #     QMessageBox.question(self, 'Message - pythonspot.com', "That user is not registered, please signup", QMessageBox.Ok, QMessageBox.Ok)
-        #     self.username.setText("")
-        #     self.password.setText("")
+        if self.Confirm_Password.text() != self.password.text():
+            QMessageBox.question(self, '', "Password and confirm password do not match", QMessageBox.Ok, QMessageBox.Ok)
+            self.password.setText("")
+            self.Confirm_Password.setText("")
+        #Have to check if it exists before adding to avoid duplicate accounts
+        elif checkEmailUser(username, email) is True:
+            QMessageBox.question(self, '', "Username or Email already exists", QMessageBox.Ok, QMessageBox.Ok)
+            self.username.setText("")
+            self.Email.setText("")
+        #add user
+        else:
+            addUser(fn, ln, email, bd, username, password)
 
-        QMessageBox.question(self, 'Message - pythonspot.com', "Congrats " + self.First_Name.text() + " you have signed up!", QMessageBox.Ok)
+            QMessageBox.question(self, '', 'Account Created!', QMessageBox.Ok, QMessageBox.Ok)
+            self.w = CalendarWindow(username)
+            self.w.show()
+            self.hide()
