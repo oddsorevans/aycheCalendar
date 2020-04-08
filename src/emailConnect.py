@@ -13,10 +13,12 @@ def sendEmail(address):
     session.sendmail("aychecalendar@gmail.com", address, message)
     session.quit()
 
-    check = int(input("Enter 2-factor verification code: "))
-    if check == twoFactor:
-        print("That is correct!")
-    else:
-        print("Wrong you dumb dumb")
+    return twoFactor
+
+    # check = int(input("Enter 2-factor verification code: "))
+    # if check == twoFactor:
+    #     print("That is correct!")
+    # else:
+    #     print("Wrong you dumb dumb")
 
 sendEmail(input("Enter email address: "))
