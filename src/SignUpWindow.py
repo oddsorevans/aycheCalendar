@@ -6,6 +6,8 @@ from PyQt5.QtCore import Qt, pyqtSlot
 from CalendarWindow import CalendarWindow
 from mongoConnect import addUser
 from mongoConnect import checkEmailUser
+from emailConnect import sendEmail
+from VerificationWindow import VerificationWindow
 
 class SignUpWindow(QMainWindow):
 
@@ -122,9 +124,15 @@ class SignUpWindow(QMainWindow):
             self.Email.setText("")
         #add user
         else:
-            addUser(fn, ln, email, bd, username, password)
+            twoFactor = sendEmail(email)
 
-            QMessageBox.question(self, '', 'Account Created!', QMessageBox.Ok, QMessageBox.Ok)
-            self.w = CalendarWindow(username)
-            self.w.show()
-            self.hide()
+            if VerificationWindow(twoFactor):
+                addUser(fn, ln, email, bd, username, password)
+
+                QMessageBox.question(self, '', 'Account Created!', QMessageBox.Ok, QMessageBox.Ok)
+                self.w = CalendarWindow(username)
+                self.w.show()
+                self.hide()
+            else:
+                QMessageBox.question(self, '', 'Try Again', QMessageBox.Ok, QMessageBox.Ok)
+                self.initUI()

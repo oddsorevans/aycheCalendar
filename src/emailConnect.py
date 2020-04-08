@@ -20,5 +20,3 @@ def sendEmail(address):
     #     print("That is correct!")
     # else:
     #     print("Wrong you dumb dumb")
-
-sendEmail(input("Enter email address: "))
