@@ -52,10 +52,7 @@ def checkLogin(usern, passwd):
         return False
     #username exists, check password
     else:
-        if bcrypt.checkpw(passwd.encode(), isThere["stPassword"].encode()):
-            return True
-        else:
-            return False
+        return bcrypt.checkpw(passwd.encode(), isThere["stPassword"].encode())
 
 def checkEmailUser(usern, email):
     client = MongoClient(connectionStrings.connectionKey)
