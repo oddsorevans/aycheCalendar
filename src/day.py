@@ -8,10 +8,10 @@ class dayObject(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        container = QGroupBox("Date Group")
-        number = QLabel()
-        number.setText("#")
-        vbox = QVBoxLayout()
-        vbox.addWidget(number)
-        container.setLayout(vbox)
+        self.container = QGroupBox("Date Group")
+        self.number = QLabel()
+        self.number.setText("#")
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.number)
+        self.container.setLayout(self.vbox)
         
