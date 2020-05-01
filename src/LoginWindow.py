@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt, pyqtSlot
 from SignUpWindow import SignUpWindow
 from CalendarWindow import CalendarWindow
 from mongoConnect import checkLogin
+from day import dayObject
 
 class LoginWindow(QMainWindow):
 
