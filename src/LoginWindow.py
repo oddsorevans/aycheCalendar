@@ -5,8 +5,6 @@ from PyQt5.QtCore import Qt, pyqtSlot
 from SignUpWindow import SignUpWindow
 from CalendarWindow import CalendarWindow
 from mongoConnect import checkLogin
-#from day import dayObject
-from month import monthObject
 
 class LoginWindow(QMainWindow):
 
@@ -23,11 +21,6 @@ class LoginWindow(QMainWindow):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.center()
-
-        #create date object for testing
-        self.date = monthObject()
-        #self.date = dayObject()
-        self.date.show()
 
         # Create textbox
         self.username = QLineEdit(self)
@@ -75,7 +68,6 @@ class LoginWindow(QMainWindow):
             QMessageBox.question(self, '', "Username or Password was Incorrect", QMessageBox.Ok, QMessageBox.Ok)
             self.username.setText("")
             self.password.setText("")
-   
 
     def signup_click(self):
         self.w = SignUpWindow()

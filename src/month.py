@@ -1,39 +1,129 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel, QGridLayout, QGroupBox, QVBoxLayout
+import datetime
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel, QGridLayout, QGroupBox, QVBoxLayout, QPushButton
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt, pyqtSlot
-from day import dayObject
 
 class monthObject(QWidget):
     def __init__(self):
         super().__init__()
 
-        groupObject = dayObject()
-        createDay = groupObject.createGroup()
-
         grid = QGridLayout()
-        grid.addWidget(createDay(), 0, 0)
-        grid.addWidget(createDay(), 1, 0)
-        grid.addWidget(createDay(), 0, 1)
-        grid.addWidget(createDay(), 1, 1)
-        #grid.addWidget(self.createDayObject(), 0, 0)
-        #grid.addWidget(self.createDayObject(), 1, 0)
-        #grid.addWidget(self.createDayObject(), 0, 1)
-        #grid.addWidget(self.createDayObject(), 1, 1)
+        #month
+        grid.addWidget(self.createMonthObject(), 1, 2, 1, 7)
+        #upcoming events
+        grid.addWidget(self.createUCEObject(), 2, 0, 6, 2)
+        #events for specific day
+        grid.addWidget(self.createDayEventObject(), 2, 9, 6, 2)
+        #days of the month
+        rows, cols = (6, 7) 
+        arr=[]
+        day = 1
+        for i in range(rows): 
+            col = []
+            for j in range(cols):
+                col.append(grid.addWidget(self.createDayObject(day), i + 2, j + 2))
+                day += 1
+            arr.append(col)
+        grid.addWidget(self.createLogoObject(), 0, 0, 2, 2)
+        grid.addWidget(self.createLogoNameObject(), 0, 2, 1, 7)
+
+        self.setMonth("April")
+
         self.setLayout(grid)
 
-        self.setWindowTitle("PyQt5 Group Box")
-        self.resize(400, 300)
+    def setDay(self, day):
+        self.number.setText(str(day))
 
-    def createDayObject(self):
-        groupBox = QGroupBox("Best Food")
+    def setMonth(self, month):
+        self.month.setText(str(month))
 
-        number = QLabel(self)
-        number.setText("dsafjkfdsa")
+    def createDayObject(self, day):
+        self.dayGroupBox = QGroupBox("")
 
-        vbox = QVBoxLayout()
-        vbox.addWidget(number)
-        vbox.addStretch(1)
-        groupBox.setLayout(vbox)
+        self.number = QLabel(self)
+        self.number.setText(str(day))
+        #self.date = datetime.datetime(2020, 5, int(day) % 29)
+        date = day
+        self.dayButton = QPushButton('PyQt5 button', self)
 
-        return groupBox
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.number)
+        self.vbox.addWidget(self.dayButton)
+        self.vbox.addStretch(1)
+        self.dayGroupBox.setLayout(self.vbox)
+
+        self.dayButton.clicked.connect(self.dayButton_click(date))
+
+        return self.dayGroupBox
+
+    def createMonthObject(self):
+        self.monthGroupBox = QGroupBox("")
+ 
+        self.month = QLabel(self)
+        self.month.setText("Month")
+
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.month)
+        self.vbox.addStretch(1)
+        self.monthGroupBox.setLayout(self.vbox)
+
+        return self.monthGroupBox
+
+    #creates groupbox for Upcoming Events
+    def createUCEObject(self):
+        self.UCEGroupBox = QGroupBox("")
+
+        self.UCE = QLabel(self)
+        self.UCE.setText("Upcoming Events")
+ 
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.UCE)
+        self.vbox.addStretch(1)
+        self.UCEGroupBox.setLayout(self.vbox)
+
+        return self.UCEGroupBox
+
+    #creates groupbox for events for the day
+    def createDayEventObject(self):
+        self.DayEventGroupBox = QGroupBox("")
+
+        self.dayE = QLabel(self)
+        self.dayE.setText("Events for the day")
+ 
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.dayE)
+        self.vbox.addStretch(1)
+        self.DayEventGroupBox.setLayout(self.vbox)
+
+        return self.DayEventGroupBox
+
+    def createLogoObject(self):
+        self.LogoGroupBox = QGroupBox("")
+
+        self.logo = QLabel(self)
+        self.logo.setText("Logo")
+
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.logo)
+        self.vbox.addStretch(1)
+        self.LogoGroupBox.setLayout(self.vbox)
+
+        return self.LogoGroupBox
+
+    def createLogoNameObject(self):
+        self.LogoNameGroupBox = QGroupBox("")
+
+        self.logoName = QLabel(self)
+        self.logoName.setText("Ayche Calendar")
+
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.logoName)
+        self.vbox.addStretch(1)
+        self.LogoNameGroupBox.setLayout(self.vbox)
+
+        return self.LogoNameGroupBox
+
+    @pyqtSlot()
+    def dayButton_click(self, date):
+        print(date)
