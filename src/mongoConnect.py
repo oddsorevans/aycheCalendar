@@ -4,6 +4,7 @@ import datetime
 import time
 import pprint
 import bcrypt
+import bson
 
 #function adds a user into the database
 def addUser(fn, ln, email, bd, usern, passwd):
@@ -84,6 +85,39 @@ def getUserEvents(usern):
     client.close()
     pprint.pprint(events)
 
-def addEvent(usern, date, title, desc, color, notes, endTime)
+def addEvent(usern, date, title, desc, color, notes, endTime):
+    newEvent = {
+        'stUser':usern, #string
+        'date':date, #datetime
+        'stTitle':title, #string
+        'stDesc':desc, #string
+        'iaColor':color, #list length 3
+        'stAddNotes':notes, #string
+        'dateEndTime':endTime #datetime
+    }
 
-getUserEvents("streams")
+    client = MongoClient(connectionStrings.connectionKey)
+    db = client.get_database('Data')
+    records = db.events
+    records.insert_one(newEvent)
+    client.close()
+
+def updateEvent(origin, usern, date, title, desc, color, notes, endTime):
+    query = {"_id":origin}
+    updated = { "$set": {
+        'stUser':usern, #string
+        'date':date, #datetime
+        'stTitle':title, #string
+        'stDesc':desc, #string
+        'iaColor':color, #list length 3
+        'stAddNotes':notes, #string
+        'dateEndTime':endTime #datetime
+    } }
+
+    client = MongoClient(connectionStrings.connectionKey)
+    db = client.get_database('Data')
+    records = db.events
+
+    records.find_one_and_update(query, updated, upsert=True)
+    client.close()
+    print("event updated")
