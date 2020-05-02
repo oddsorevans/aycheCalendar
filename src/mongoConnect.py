@@ -43,6 +43,7 @@ def checkLogin(usern, passwd):
     )
     #close and return value
     client.close()
+    print(isThere)
     # used to test performance
     #elapsed = time.time() - start
     #print(elapsed)
@@ -72,5 +73,15 @@ def checkEmailUser(usern, email):
     else:
         return True
 
-# for i in range(0,1000):
-#     checkLogin("streams", "mayonnaise")
+def getUserEvents(usern):
+    client = MongoClient(connectionStrings.connectionKey)
+    db = client.get_database('Data')
+    records = db.events
+
+    #get all user events for that user. WIll be stored in a local JSON
+    events = list(records.find({"stUser" : usern}))
+
+    client.close()
+    pprint.pprint(events)
+
+getUserEvents("streams")
