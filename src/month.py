@@ -1,13 +1,16 @@
 import sys
 import datetime
 import numpy as np
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel, QGridLayout, QGroupBox, QVBoxLayout, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel, QGridLayout, QGroupBox, QVBoxLayout, QPushButton, QCalendarWidget
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtCore import Qt, pyqtSlot
+from PyQt5.QtCore import Qt, pyqtSlot, QDate
 
 class monthObject(QWidget):
     def __init__(self):
         super().__init__()
+
+        self.currentMonth = datetime.datetime.now().month
+        self.currentYear = datetime.datetime.now().year
 
         grid = QGridLayout()
         #month
@@ -18,12 +21,9 @@ class monthObject(QWidget):
         grid.addWidget(self.createDayEventObject(), 2, 9, 6, 2)
         #days of the month
         rows, cols = (6, 7)
-        self.days = np.ndarray(shape = (rows, cols), dtype=QGroupBox)
-        day = 1
-        for i in range(rows):
-            for j in range(cols):
-                self.days[i][j] = grid.addWidget(self.createDayObject(day), i + 2, j + 2)
-                day += 1
+        self.days = np.ndarray(shape = (rows, cols), dtype=day)
+        self.cDay = day()
+        grid.addWidget(self.createCelendar(), 3, 3, 6, 7)
         grid.addWidget(self.createLogoObject(), 0, 0, 2, 2)
         grid.addWidget(self.createLogoNameObject(), 0, 2, 1, 7)
 
@@ -36,6 +36,17 @@ class monthObject(QWidget):
 
     def setMonth(self, month):
         self.month.setText(str(month))
+
+    def createCelendar(self):
+        self.calGroupBox = QGroupBox("")
+
+        self.calendar = QCalendarWidget(self)
+        self.calendar.setGridVisible(True)
+
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.calendar)
+        self.vbox.addStretch(1)
+        self.calGroupBox.setLayout(self.vbox)
 
     def createMonthObject(self):
         self.monthGroupBox = QGroupBox("")
@@ -104,9 +115,6 @@ class monthObject(QWidget):
 
         return self.LogoNameGroupBox
 
-    @pyqtSlot()
-    def dayButton_click(self):
-        print(self.date)
 
 class day(QWidget):
     def __init__(self):
@@ -129,3 +137,7 @@ class day(QWidget):
 
         self.dayButton.clicked.connect(self.dayButton_click)
         return self.dayGroupBox
+    
+    @pyqtSlot()
+    def dayButton_click(self):
+        print(self.date)
