@@ -74,6 +74,35 @@ def checkEmailUser(usern, email):
     else:
         return True
 
+def changePassword(usern, opass, npass):
+    client = MongoClient(connectionStrings.connectionKey)
+    db = client.get_database('Data')
+    records = db.users
+    #uses AND to check if the pair exists. Either returns dict or Nonetype
+    isThere = records.find_one(
+        {"stUsername" : usern}
+    )
+    #if nothing returned, false
+    if isThere is None:
+        client.close()
+        return False
+    #username exists, check password
+    else:
+        #password exists
+        if bcrypt.checkpw(opass.encode(), isThere["stPassword"].encode()):
+            #hash password
+            salt = bcrypt.gensalt()
+            #use encode() to turn string to byte for processing
+            hashed = bcrypt.hashpw(npass.encode(), salt)
+            #turn from byte to string
+            hashed = hashed.decode()
+            records.find_one_and_update({"stUsername" : usern}, {"$set" : {"stPassword" : hashed}})
+            client.close()
+            return True
+        else:
+            client.close()
+            return False
+
 def getUserEvents(usern):
     client = MongoClient(connectionStrings.connectionKey)
     db = client.get_database('Data')
@@ -84,6 +113,7 @@ def getUserEvents(usern):
 
     client.close()
     pprint.pprint(events)
+    return events
 
 def addEvent(usern, date, title, desc, color, notes, endTime):
     newEvent = {
