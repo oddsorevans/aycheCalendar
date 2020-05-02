@@ -151,3 +151,27 @@ def updateEvent(origin, usern, date, title, desc, color, notes, endTime):
     records.find_one_and_update(query, updated, upsert=True)
     client.close()
     print("event updated")
+
+def deleteEvent(origin):
+    client = MongoClient(connectionStrings.connectionKey)
+    db = client.get_database('Data')
+    records = db.events
+    records.delete_one({"_id" : origin})
+    client.close()
+
+def deleteUser(usern, passwd):
+    #check if usern and passwd are correct
+    if checkLogin(usern, passwd):
+        #delete all cases in the events database
+        client = MongoClient(connectionStrings.connectionKey)
+        db = client.get_database('Data')
+        records = db.events
+        records.delete_many({"stUser" : usern})
+        #delete user
+        records = db.users
+        records.delete_one({"stUsername" : usern})
+        client.close()
+        return True
+    else:
+        return False
+
