@@ -1,5 +1,6 @@
 import sys
 import datetime
+import numpy as np
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel, QGridLayout, QGroupBox, QVBoxLayout, QPushButton
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt, pyqtSlot
@@ -16,15 +17,13 @@ class monthObject(QWidget):
         #events for specific day
         grid.addWidget(self.createDayEventObject(), 2, 9, 6, 2)
         #days of the month
-        rows, cols = (6, 7) 
-        arr=[]
+        rows, cols = (6, 7)
+        self.days = np.ndarray(shape = (rows, cols), dtype=QGroupBox)
         day = 1
-        for i in range(rows): 
-            col = []
+        for i in range(rows):
             for j in range(cols):
-                col.append(grid.addWidget(self.createDayObject(day), i + 2, j + 2))
+                self.days[rows][cols] = grid.addWidget(self.createDayObject(day), i + 2, j + 2)
                 day += 1
-            arr.append(col)
         grid.addWidget(self.createLogoObject(), 0, 0, 2, 2)
         grid.addWidget(self.createLogoNameObject(), 0, 2, 1, 7)
 
@@ -44,8 +43,8 @@ class monthObject(QWidget):
         self.number = QLabel(self)
         self.number.setText(str(day))
         #self.date = datetime.datetime(2020, 5, int(day) % 29)
-        date = day
-        self.dayButton = QPushButton('PyQt5 button', self)
+        self.date = day
+        self.dayButton = QPushButton('Show Events', self)
 
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.number)
@@ -53,7 +52,7 @@ class monthObject(QWidget):
         self.vbox.addStretch(1)
         self.dayGroupBox.setLayout(self.vbox)
 
-        self.dayButton.clicked.connect(self.dayButton_click(date))
+        self.dayButton.clicked.connect(self.dayButton_click)
 
         return self.dayGroupBox
 
@@ -125,5 +124,5 @@ class monthObject(QWidget):
         return self.LogoNameGroupBox
 
     @pyqtSlot()
-    def dayButton_click(self, date):
-        print(date)
+    def dayButton_click(self):
+        print(self.date)
