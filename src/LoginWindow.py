@@ -1,11 +1,12 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel, QGroupBox, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel, QGridLayout, QGroupBox, QVBoxLayout
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt, pyqtSlot
 from SignUpWindow import SignUpWindow
 from CalendarWindow import CalendarWindow
 from mongoConnect import checkLogin
-from day import dayObject
+#from day import dayObject
+from month import monthObject
 
 class LoginWindow(QMainWindow):
 
@@ -24,7 +25,9 @@ class LoginWindow(QMainWindow):
         self.center()
 
         #create date object for testing
-        self.date = dayObject()
+        self.date = monthObject()
+        #self.date = dayObject()
+        self.date.show()
 
         # Create textbox
         self.username = QLineEdit(self)
