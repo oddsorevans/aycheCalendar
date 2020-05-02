@@ -84,4 +84,6 @@ def getUserEvents(usern):
     client.close()
     pprint.pprint(events)
 
+def addEvent(usern, date, title, desc, color, notes, endTime)
+
 getUserEvents("streams")
