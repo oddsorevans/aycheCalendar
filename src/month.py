@@ -22,7 +22,7 @@ class monthObject(QWidget):
         day = 1
         for i in range(rows):
             for j in range(cols):
-                self.days[rows][cols] = grid.addWidget(self.createDayObject(day), i + 2, j + 2)
+                self.days[i][j] = grid.addWidget(self.createDayObject(day), i + 2, j + 2)
                 day += 1
         grid.addWidget(self.createLogoObject(), 0, 0, 2, 2)
         grid.addWidget(self.createLogoNameObject(), 0, 2, 1, 7)
@@ -36,25 +36,6 @@ class monthObject(QWidget):
 
     def setMonth(self, month):
         self.month.setText(str(month))
-
-    def createDayObject(self, day):
-        self.dayGroupBox = QGroupBox("")
-
-        self.number = QLabel(self)
-        self.number.setText(str(day))
-        #self.date = datetime.datetime(2020, 5, int(day) % 29)
-        self.date = day
-        self.dayButton = QPushButton('Show Events', self)
-
-        self.vbox = QVBoxLayout()
-        self.vbox.addWidget(self.number)
-        self.vbox.addWidget(self.dayButton)
-        self.vbox.addStretch(1)
-        self.dayGroupBox.setLayout(self.vbox)
-
-        self.dayButton.clicked.connect(self.dayButton_click)
-
-        return self.dayGroupBox
 
     def createMonthObject(self):
         self.monthGroupBox = QGroupBox("")
@@ -126,3 +107,25 @@ class monthObject(QWidget):
     @pyqtSlot()
     def dayButton_click(self):
         print(self.date)
+
+class day(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.dayGroupBox = QGroupBox("")
+
+    def createDayObject(self, day):
+
+        self.number = QLabel(self)
+        self.number.setText(str(day))
+        #self.date = datetime.datetime(2020, 5, int(day) % 29)
+        self.date = day
+        self.dayButton = QPushButton('Show Events', self)
+
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.number)
+        self.vbox.addWidget(self.dayButton)
+        self.vbox.addStretch(1)
+        self.dayGroupBox.setLayout(self.vbox)
+
+        self.dayButton.clicked.connect(self.dayButton_click)
+        return self.dayGroupBox
