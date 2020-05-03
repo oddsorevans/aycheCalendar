@@ -9,6 +9,7 @@ class events():
         super().__init__()
         self.eventOwner = usern
         self.allEvents = mongoConnect.getUserEvents(usern)
+        self.sortAllEvents()
 
     def printContents(self):
         pprint.pprint(self.allEvents)
@@ -30,6 +31,7 @@ class events():
         for events in self.allEvents:
             if origin == events['_id']:
                 events.update(updated)
+        self.sortAllEvents()#sort incase dates change
     
     def createEvent(self, date, title, desc, color, notes, endTime):
         mongoConnect.addEvent(self.eventOwner, date, title, desc, color, notes, endTime)
@@ -45,6 +47,13 @@ class events():
             'dateEndTime':endTime #datetime
         }
         self.allEvents.append(toAdd)#id doesnt exist, so adds
+        self.sortAllEvents()
+
+    def deleteEvent(self, origin):
+        mongoConnect.deleteEvent(origin)
+        for events in self.allEvents:
+            if origin == events['_id']:
+                self.allEvents.remove(events)
 
     def searchByDate(self, date):
         inOrder = []
@@ -61,6 +70,9 @@ class events():
                 #pprint.pprint(events)
                 inOrder.append(events)
         return sorted(inOrder, key = lambda i: i['date'])
+    
+    def sortAllEvents(self):
+        self.allEvents = sorted(self.allEvents, key = lambda i: i['date'])
             
         
 # testing = events("streams")
