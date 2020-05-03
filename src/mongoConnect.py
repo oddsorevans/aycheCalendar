@@ -112,8 +112,23 @@ def getUserEvents(usern):
     events = list(records.find({"stUser" : usern}))
 
     client.close()
-    pprint.pprint(events)
+    #pprint.pprint(events)
     return events
+
+def getObjectId(usern, title, date):
+    client = MongoClient(connectionStrings.connectionKey)
+    db = client.get_database('Data')
+    records = db.events
+
+    exists = records.find_one({
+        '$and' : [
+            {"stUser" : usern},
+            {"stTitle" : title},
+            {"date" : date}
+        ]
+    })
+
+    return exists['_id']
 
 def addEvent(usern, date, title, desc, color, notes, endTime):
     newEvent = {
