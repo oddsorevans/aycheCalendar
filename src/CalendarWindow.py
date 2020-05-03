@@ -8,18 +8,17 @@ class CalendarWindow(QMainWindow):
 
     def __init__(self, uname):
         super().__init__()
-        self.title = 'Ayche Calendar'
+        self.title = 'Ayche Calendar - Welcome '
         self.left = 10
         self.top = 10
         self.width = 960
         self.height = 540
+        self.username = uname
         self.initUI()
         
-        self.textFont = QFont()
-        self.textFont.setPointSize(48)
+        #self.textFont = QFont()
+        #self.textFont.setPointSize(48)
 
-        self.username = uname
-        
         # Create Label
         #self.welcomeText = QLabel(self)
         #self.welcomeText.move(180, 0)
@@ -35,7 +34,7 @@ class CalendarWindow(QMainWindow):
         
     
     def initUI(self):
-        self.setWindowTitle(self.title)
+        self.setWindowTitle(self.title + self.username + '!')
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.setFixedSize(self.width, self.height)
         self.center()
