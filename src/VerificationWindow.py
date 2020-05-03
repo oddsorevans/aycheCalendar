@@ -9,6 +9,7 @@ class VerificationWindow(QMainWindow):
     def __init__(self, vCorrect):
         super().__init__()
         self.title = 'Ayche Calendar'
+        self.setWindowIcon(QIcon("logox64.png"))
         self.left = 10
         self.top = 10
         self.width = 100
