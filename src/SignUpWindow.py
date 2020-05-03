@@ -29,6 +29,13 @@ class SignUpWindow(QMainWindow):
         self.setFixedSize(self.width, self.height)
         self.center()
 
+        self.logoLabel = QLabel(self)
+        self.logoPixmap = QPixmap('logox676.png')
+        self.pixmap_resized = self.logoPixmap.scaled(280, 280, Qt.KeepAspectRatio)
+        self.logoLabel.setPixmap(self.pixmap_resized)
+        self.logoLabel.move(20, 20)
+        self.logoLabel.resize(280, 280)
+
         # First_Name
         self.First_Name = QLineEdit(self)
         self.First_Name.move(330, 20)
