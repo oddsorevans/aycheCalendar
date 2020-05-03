@@ -9,6 +9,8 @@ class CalendarWindow(QMainWindow):
     def __init__(self, uname):
         super().__init__()
         self.title = 'Ayche Calendar - Welcome '
+        self.setWindowIcon(QIcon("logox64.png"))
+        self.setStyleSheet("background-color:rgb(251,235,219)")
         self.left = 10
         self.top = 10
         self.width = 960
