@@ -27,13 +27,44 @@ class events():
             'stAddNotes':notes, #string
             'dateEndTime':endTime #datetime
         }
-        self.allEvents[0].update(updated)
+        for events in self.allEvents:
+            if origin == events['_id']:
+                events.update(updated)
     
-    def createEvent(self, usern, date, title, desc, color, notes, endTime):
-        
+    def createEvent(self, date, title, desc, color, notes, endTime):
+        mongoConnect.addEvent(self.eventOwner, date, title, desc, color, notes, endTime)
+        origin = mongoConnect.getObjectId(self.eventOwner, title, date)
+        toAdd = {
+            '_id':origin,
+            'stUser':self.eventOwner, #string
+            'date':date, #datetime
+            'stTitle':title, #string
+            'stDesc':desc, #string
+            'iaColor':color, #list length 3
+            'stAddNotes':notes, #string
+            'dateEndTime':endTime #datetime
+        }
+        self.allEvents.append(toAdd)#id doesnt exist, so adds
 
+    def searchByDate(self, date):
+        inOrder = []
+        for events in self.allEvents:
+            if date == events['date'].date():
+                #pprint.pprint(events)
+                inOrder.append(events)
+        return sorted(inOrder, key = lambda i: i['date'])
+
+    def searchByColor(self, color):
+        inOrder = []
+        for events in self.allEvents:
+            if color == events['iaColor']:
+                #pprint.pprint(events)
+                inOrder.append(events)
+        return sorted(inOrder, key = lambda i: i['date'])
+            
+        
 # testing = events("streams")
-# testing.printContents()
-# origin = bson.ObjectId('5eada87cfca888703584f0db')
-# testing.updateEvent(origin, "streams", datetime.datetime(2020, 5, 2, 0, 0), 'updated', 'this is updated', [15,15,15], 'i just updated this', datetime.datetime(2020,5,2,5,0))
+# testing.createEvent(datetime.datetime(2020,5,2,6,0,0), 'testing10', 'hello', [10,10,10], 'hopefully this gets sorted', datetime.datetime(2020,5,2,0,0,0))
+# checking = testing.searchByDate(datetime.date(2020,5,2))
+# pprint.pprint(checking)
 # testing.printContents()
