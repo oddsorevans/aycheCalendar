@@ -37,6 +37,7 @@ class CalendarWindow(QMainWindow):
     def initUI(self):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
+        self.setFixedSize(self.width, self.height)
         self.center()
 
         #creates calendar view
