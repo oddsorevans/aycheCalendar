@@ -3,6 +3,7 @@ import datetime
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel, QGridLayout, QGroupBox, QVBoxLayout, QPushButton, QCalendarWidget
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt, pyqtSlot, QDate
+from CreateEventWindow import CreateEventWindow
 
 class monthObject(QWidget):
     def __init__(self):
@@ -71,9 +72,17 @@ class monthObject(QWidget):
         self.logo = QLabel(self)
         self.logo.setText("Buttons")
 
+        self.createButton = QPushButton('Create Event', self)
+
         self.vbox = QVBoxLayout()
-        self.vbox.addWidget(self.logo)
+        self.vbox.addWidget(self.createButton)
         self.vbox.addStretch(1)
         self.LogoGroupBox.setLayout(self.vbox)
 
+        self.createButton.clicked.connect(self.createButton_click)
+
         return self.LogoGroupBox
+
+    @pyqtSlot()
+    def createButton_click(self):
+        CreateEventWindow()
