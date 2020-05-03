@@ -112,7 +112,7 @@ def getUserEvents(usern):
     events = list(records.find({"stUser" : usern}))
 
     client.close()
-    pprint.pprint(events)
+    #pprint.pprint(events)
     return events
 
 def addEvent(usern, date, title, desc, color, notes, endTime):
