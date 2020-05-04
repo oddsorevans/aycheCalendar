@@ -14,13 +14,13 @@ class events():
     def printContents(self):
         pprint.pprint(self.allEvents)
     
-    def updateEvent(self, origin, usern, date, title, desc, color, notes, endTime):
+    def updateEvent(self, origin, date, title, desc, color, notes, endTime):
         #update in db
-        mongoConnect.updateEvent(origin, usern, date, title, desc, color, notes, endTime)
+        mongoConnect.updateEvent(origin, self.eventOwner, date, title, desc, color, notes, endTime)
         #update locally
         updated = {
             '_id':origin,
-            'stUser':usern, #string
+            'stUser':self.eventOwner, #string
             'date':date, #datetime
             'stTitle':title, #string
             'stDesc':desc, #string

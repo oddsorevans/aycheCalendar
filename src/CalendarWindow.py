@@ -1,5 +1,4 @@
 import sys
-import eventHandler
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QDesktopWidget, QLabel
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtCore import Qt, pyqtSlot
@@ -18,24 +17,8 @@ class CalendarWindow(QMainWindow):
         self.height = 540
         self.username = uname
         self.initUI()
-        
-        #self.textFont = QFont()
-        #self.textFont.setPointSize(48)
 
-        # Create Label
-        #self.welcomeText = QLabel(self)
-        #self.welcomeText.move(180, 0)
-        #self.welcomeText.resize(800, 440)
-        #self.welcomeText.setFont(self.textFont)
-        #self.welcomeText.setText("Welcome " + self.username)
 
-        #self.toText = QLabel(self)
-        #self.toText.move(240, 100)
-        #self.toText.resize(520, 440)
-        #self.toText.setFont(self.textFont)
-        #self.toText.setText("to AycheCalendar")
-        
-    
     def initUI(self):
         self.setWindowTitle(self.title + self.username + '!')
         self.setGeometry(self.left, self.top, self.width, self.height)
@@ -43,7 +26,7 @@ class CalendarWindow(QMainWindow):
         self.center()
 
         #creates calendar view
-        self.date = monthObject()
+        self.date = monthObject(self.username)
         self.setCentralWidget(self.date)
         self.date.show()
     
