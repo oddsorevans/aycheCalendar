@@ -189,4 +189,3 @@ def deleteUser(usern, passwd):
         return True
     else:
         return False
-
